@@ -49,7 +49,7 @@ public class ZooClient {
         System.out.println(response.getStatus());
         response.close();*/
 
-        // buy animal 
+        // buy animal
         Animal butterfly = new Animal("Butterfly Flip",14, "Horse", HealthStatus.DEAD, "2012-05-21" );
         Entity lasseEntity = Entity.entity(butterfly, "application/JSON");
 
