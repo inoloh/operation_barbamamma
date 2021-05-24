@@ -9,49 +9,53 @@ public class ZooClient {
     public static void main(String[] args) {
         Client client = ClientBuilder.newClient();
 
+        // find animal by id, add correct animalid
         /*Response response = client.target("http://localhost:8080/operation_barbapappa-1.0-SNAPSHOT-war/fantastic-world/animals/19").request().buildGet().invoke();
-        System.out.println(response.readEntity(Animal.class));
-
         Animal animal = response.readEntity(Animal.class);
         System.out.println(animal);
         response.close();*/
 
-        // get headers for animalId
+        // get headers for animalId, add correct animalid
         /*Response response = client.target("http://localhost:8080/operation_barbapappa-1.0-SNAPSHOT-war/fantastic-world/animals/21").request("application/JSON").buildGet().invoke();
         System.out.println(response.getHeaders().toString());
         System.out.println(response.getStatus());
         System.out.println(response.readEntity(String.class));
         response.close();*/
 
-        // get headers for executing animals
+        // get headers for executing animals, add correct animalid
         /*Response response = client.target("http://localhost:8080/operation_barbapappa-1.0-SNAPSHOT-war/fantastic-world/animals/execute/24")
                                   .request("application/JSON").delete();
         System.out.println(response.getHeaders().toString());
         System.out.println(response.getStatus());
         System.out.println(response.readEntity(String.class));
         response.close();*/
-        /*System.out.println(response.readEntity(String.class));*/
 
-        /*List<Animal> animals = response.readEntity(new GenericType<List<Animal>>() {});
+        // show all animals
+        /*Response response = client.target("http://localhost:8080/operation_barbapappa-1.0-SNAPSHOT-war/fantastic-world/animals").request("application/JSON").buildGet().invoke();
+        List<Animal> animals = response.readEntity(new GenericType<List<Animal>>() {});
 
         for (Animal a : animals) {
             System.out.println(a);
         }
         response.close();*/
-        Response response = client.target("http://localhost:8080/operation_barbapappa-1.0-SNAPSHOT-war/fantastic-world/animals/22").request("application/JSON").buildGet().invoke();
+
+        // change status of animal by animalid (HEALTHY, SICK, DEAD)
+        /*Response response = client.target("http://localhost:8080/operation_barbapappa-1.0-SNAPSHOT-war/fantastic-world/animals/25").request("application/JSON").buildGet().invoke();
         Animal animal = response.readEntity(Animal.class);
         Entity nigelEntity = Entity.entity(animal, "application/JSON");
         response.close();
-        response = client.target("http://localhost:8080/operation_barbapappa-1.0-SNAPSHOT-war/fantastic-world/animals?animalid=22&status=SICK").request("application/JSON").buildPut(nigelEntity).invoke();
+        response = client.target("http://localhost:8080/operation_barbapappa-1.0-SNAPSHOT-war/fantastic-world/animals?animalid=25&status=DEAD").request("application/JSON").buildPut(nigelEntity).invoke();
+        System.out.println(response.getHeaders().toString());
+        System.out.println(response.getStatus());
+        response.close();*/
+
+        // buy animal 
+        Animal butterfly = new Animal("Butterfly Flip",14, "Horse", HealthStatus.DEAD, "2012-05-21" );
+        Entity lasseEntity = Entity.entity(butterfly, "application/JSON");
+
+        Response response = client.target("http://localhost:8080/operation_barbapappa-1.0-SNAPSHOT-war/fantastic-world/animals").request("application/JSON").buildPost(lasseEntity).invoke();
+        System.out.println(response.readEntity(Animal.class).getId());
         response.close();
-
-        // lägga till djur
-        /*Animal lasse = new Animal("Lolita", 14, "Dog", HealthStatus.DEAD, "2012-05-21" );
-        Entity lasseEntity = Entity.entity(lasse, "application/JSON");
-
-        Response response = client.target("http://localhost:8080/operation_barbapappa-1.0-SNAPSHOT-war/fantastic-world/animals/freezer").request("application/JSON").buildPost(lasseEntity).invoke();*/
-        /*System.out.println(response.readEntity(Animal.class).getId());*/
-        /*response.close();*/
 
     }
 }
